@@ -214,8 +214,14 @@ void HttLambdaNtupleConsumer::Init(setting_type const& settings)
 	{
 		return LambdaNtupleConsumer<KappaTypes>::GetFloatQuantities().count("genBosonPt") >= 1 ? LambdaNtupleConsumer<KappaTypes>::GetFloatQuantities()["genBosonPt"](event, product) : DefaultValues::UndefinedFloat;
 	});
-
-
+        LambdaNtupleConsumer<KappaTypes>::AddIntQuantity("trg_mutaucross", [](KappaEvent const& event, KappaProduct const& product)
+        {
+                return 1;
+        });
+	LambdaNtupleConsumer<KappaTypes>::AddIntQuantity("trg_doubletau", [](KappaEvent const& event, KappaProduct const& product)
+	{
+		return 1;
+	});
 	LambdaNtupleConsumer<KappaTypes>::AddIntQuantity("isFake", [](KappaEvent const& event, KappaProduct const& product)
 	{
 		return DefaultValues::UndefinedInt;

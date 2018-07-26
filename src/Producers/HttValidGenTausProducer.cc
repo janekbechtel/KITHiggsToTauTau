@@ -85,8 +85,8 @@ void HttValidGenTausProducer::SortVectors(event_type const& event, product_type&
 			else
 				std::reverse(product.m_flavourOrderedGenTaus.begin(), product.m_flavourOrderedGenTaus.end());
 		}
-		else
-			std::cout << "Event Category does not match generated Taus"; //Todo: do something with this insight
+		//else
+		//	std::cout << "Event Category does not match generated Taus"; //Todo: do something with this insight
 	}
 	return;
 }

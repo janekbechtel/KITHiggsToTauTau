@@ -55,12 +55,11 @@ def build_config(nickname):
   config["MinNElectrons"] = 1
   config["MinNTaus"] = 1
   # HltPaths_comment: The first path must be the single lepton trigger. A corresponding Pt cut is implemented in the Run2DecayChannelProducer.
-  if re.search("Run2016|Summer16", nickname): config["HltPaths"] = [
+  if re.search("Run2016|Summer16|Embedding2016", nickname): config["HltPaths"] = [
           "HLT_Ele25_eta2p1_WPTight_Gsf"]
-  elif isEmbedded: config["HltPaths"] = [
-          ""]
   config["HLTBranchNames"] = ["trg_singleelectron:HLT_Ele25_eta2p1_WPTight_Gsf_v"]
-  config["NoHltFiltering"] = True if isEmbedded else False
+  config["NoHltFiltering"] = False
+
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
   config["ElectronLowerPtCuts"] = ["26.0"]
@@ -72,25 +71,48 @@ def build_config(nickname):
   config["DiTauPairIsTauIsoMVA"] = True
   config["DiTauPairLepton1LowerPtCuts"] = ["HLT_Ele25_eta2p1_WPTight_Gsf_v:26.0"]
   config["DiTauPairHltPathsWithoutCommonMatchRequired"] = ["HLT_Ele25_eta2p1_WPTight_Gsf_v"]
-  config["DiTauPairNoHLT"] = True if isEmbedded else False
+  config["DiTauPairNoHLT"] = False
   config["DiTauPairHLTLast"] = True
   config["EventWeight"] = "eventWeight"
-  config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_sm_moriond_v2.root"
-  config["RooWorkspaceWeightNames"] = [
-    "0:triggerWeight",
-    "0:idIsoWeight",
-    "0:trackWeight"
-  ]
-  config["RooWorkspaceObjectNames"] = [
-    "0:e_trgEle25eta2p1WPTight_desy_ratio",
-    "0:e_idiso0p1_desy_ratio",
-    "0:e_trk_ratio"
-  ]
-  config["RooWorkspaceObjectArguments"] = [
-    "0:e_pt,e_eta",
-    "0:e_pt,e_eta",
-    "0:e_pt,e_eta"
-  ]
+  if isEmbedded:
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_9_embedded.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_9_embedded.root"
+    config["EmbeddedWeightWorkspaceWeightNames"]=[
+          "0:muonEffTrgWeight",
+          "0:isoWeight",
+          "0:idWeight",
+          "0:triggerWeight"
+          ]
+    config["EmbeddedWeightWorkspaceObjectNames"]=[
+          "0:m_sel_trg_ratio",
+          "0:e_iso_ratio",
+          "0:e_id_ratio",
+          "0:e_trg_ratio"
+          ]
+    config["EmbeddedWeightWorkspaceObjectArguments"] = [
+          "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta",
+          "0:e_pt,e_eta"
+          ]
+  else:
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_sm_moriond_v2.root"
+    config["RooWorkspaceWeightNames"] = [
+      "0:triggerWeight",
+      "0:idIsoWeight",
+      "0:trackWeight"
+    ]
+    config["RooWorkspaceObjectNames"] = [
+      "0:e_trgEle25eta2p1WPTight_desy_ratio",
+      "0:e_idiso0p1_desy_ratio",
+      "0:e_trk_ratio"
+    ]
+    config["RooWorkspaceObjectArguments"] = [
+      "0:e_pt,e_eta",
+      "0:e_pt,e_eta",
+      "0:e_pt,e_eta"
+    ]
+
   config["TriggerEfficiencyData"] = [
     "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_Run2016_Electron_Ele25WPTight_eff.root"]
   config["TriggerEfficiencyMc"] = [
@@ -130,7 +152,7 @@ def build_config(nickname):
       "lep1ErrDz",
       "lep2ErrD0",
       "lep2ErrDz",
-      "PVnDOF",
+      #~ "PVnDOF",
       #"PVchi2",
       "drel0_1",
       "drel0_2",
@@ -141,6 +163,10 @@ def build_config(nickname):
       #"htxs_stage1cat",
       "flagMETFilter"
   ])
+  if isEmbedded:
+    config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.embeddedDecayModeWeightQuantities").build_list())
+    config["Quantities"].extend([
+          "muonEffTrgWeight"])  
   if re.search("HToTauTauM125", nickname):
     config["Quantities"].extend([
       "htxs_stage0cat",
@@ -158,6 +184,8 @@ def build_config(nickname):
                                                               "filter:MinElectronsCountFilter",
                                                               "producer:ValidMuonsProducer"]
   if not isData:                 config["Processors"].append( "producer:TauCorrectionsProducer")
+  if not isData:               config["Processors"].append(   "producer:HttValidGenTausProducer")
+
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "filter:ValidTausFilter",
                                                               "producer:TauTriggerMatchingProducer",
@@ -181,10 +209,13 @@ def build_config(nickname):
 							      "producer:SimpleMuTauFakeRateWeightProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
+  if isEmbedded:                 config["Processors"].append( "producer:TauDecayModeWeightProducer")
   config["Processors"].extend((                               "filter:MinimalPlotlevelFilter",
                                                               "producer:SvfitProducer",
                                                               "producer:ImpactParameterCorrectionsProducer")) #"producer:MVATestMethodsProducer"
-  if not isData:                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")
+  if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
+  if not (isData or isEmbedded):                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")    
+
   config["Processors"].append(                                "producer:EventWeightProducer")
   
   
@@ -195,7 +226,9 @@ def build_config(nickname):
   config["BranchGenMatchedTaus"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
+
                          #"SvfitCacheConsumer"]
+
                          #"CutFlowTreeConsumer",
                          #"KappaElectronsConsumer",
                          #"KappaTausConsumer",

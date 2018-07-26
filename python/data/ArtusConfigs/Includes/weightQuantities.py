@@ -43,7 +43,11 @@ def build_list():
     "topPtReweightWeightRun2",
     "zPtReweightWeight",
     "eleTauFakeRateWeight",
-    "muTauFakeRateWeight"
+    "muTauFakeRateWeight",
+    "idWeight_1",
+    "idWeight_2",
+    "isoWeight_1",
+    "isoWeight_2"
   ]
   
   return quantities_list

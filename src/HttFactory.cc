@@ -55,8 +55,10 @@
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/TaggedJetUncertaintyShiftProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/NLOreweightingWeightsProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/TauTrigger2017EfficiencyProducer.h"
-#include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/ImpactParameterCorrectionsProducer.h"
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/MetFilterFlagProducer.h"
+#include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/ImpactParameterCorrectionsProducer.h"
+#include "HiggsAnalysis/KITHiggsToTauTau/interface/Producers/TauDecayModeWeightProducer.h"
+
 
 // filters
 #include "HiggsAnalysis/KITHiggsToTauTau/interface/Filters/LooseObjectsCountFilters.h"
@@ -146,6 +148,8 @@ ProducerBaseUntemplated * HttFactory::createProducer(std::string const& id)
 		return new MuonTauFakeRateWeightProducer();
 //	else if(id == TauSpinnerProducer().GetProducerId())
 //		return new TauSpinnerProducer();
+        else if(id == TauDecayModeWeightProducer().GetProducerId())
+                return new TauDecayModeWeightProducer();
 	else if(id == DiLeptonQuantitiesProducer().GetProducerId())
 		return new DiLeptonQuantitiesProducer();
 	else if(id == DiJetQuantitiesProducer().GetProducerId())
@@ -210,6 +214,8 @@ ProducerBaseUntemplated * HttFactory::createProducer(std::string const& id)
 		return new ETTriggerTagAndProbeProducer();
 	else if(id == MVATestMethodsProducer().GetProducerId())
 		return new MVATestMethodsProducer();
+	else if(id == ImpactParameterCorrectionsProducer().GetProducerId())
+			return new ImpactParameterCorrectionsProducer();
 //	else if(id == HHKinFitProducer().GetProducerId())
 //		return new HHKinFitProducer();
 	else if(id == MVAInputQuantitiesProducer().GetProducerId())
@@ -218,6 +224,8 @@ ProducerBaseUntemplated * HttFactory::createProducer(std::string const& id)
 		return new TopPtReweightingProducer();
 	else if(id == ZPtReweightProducer().GetProducerId())
 		return new ZPtReweightProducer();
+	else if(id == MetFilterFlagProducer().GetProducerId())
+		return new MetFilterFlagProducer();
 	else if(id == SimpleEleTauFakeRateWeightProducer().GetProducerId())
 		return new SimpleEleTauFakeRateWeightProducer();
 	else if(id == SimpleMuTauFakeRateWeightProducer().GetProducerId())
@@ -242,6 +250,8 @@ ProducerBaseUntemplated * HttFactory::createProducer(std::string const& id)
 		return new EETriggerWeightProducer();
 	else if(id == MuMuTriggerWeightProducer().GetProducerId())
 		return new MuMuTriggerWeightProducer();
+	else if(id == EmbeddedWeightProducer().GetProducerId())
+		return new EmbeddedWeightProducer();
 	else if(id == TauTauTriggerWeightProducer().GetProducerId())
 		return new TauTauTriggerWeightProducer();
 	else if(id == MuTauTriggerWeightProducer().GetProducerId())
