@@ -452,8 +452,6 @@ class ValidTTPairCandidatesProducer: public ValidDiTauPairCandidatesProducerBase
 public:
 	ValidTTPairCandidatesProducer();
 	virtual std::string GetProducerId() const override;
-	virtual bool AdditionalCriteria(DiTauPair const&, event_type const&,
-	                                product_type&, setting_type const&) const override;
 };
 
 class ValidMTPairCandidatesProducer: public ValidDiTauPairCandidatesProducerBase<KMuon, KTau>
@@ -482,8 +480,6 @@ class ValidMMPairCandidatesProducer: public ValidDiTauPairCandidatesProducerBase
 public:
 	ValidMMPairCandidatesProducer();
 	virtual std::string GetProducerId() const override;
-	virtual bool AdditionalCriteria(DiTauPair const&, event_type const&,
-	                                product_type&, setting_type const&) const override;
 };
 
 class ValidEEPairCandidatesProducer: public ValidDiTauPairCandidatesProducerBase<KElectron, KElectron>
@@ -491,7 +487,5 @@ class ValidEEPairCandidatesProducer: public ValidDiTauPairCandidatesProducerBase
 public:
 	ValidEEPairCandidatesProducer();
 	virtual std::string GetProducerId() const override;
-	virtual bool AdditionalCriteria(DiTauPair const&, event_type const&,
-	                                product_type&, setting_type const&) const override;
 };
 

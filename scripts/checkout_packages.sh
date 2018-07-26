@@ -29,6 +29,7 @@ git clone https://github.com/KIT-CMS/Artus.git
 # checkout KITHiggsToTauTau CMSSW analysis package
 git clone https://github.com/KIT-CMS/KITHiggsToTauTau HiggsAnalysis/KITHiggsToTauTau 
 #svn co https://ekptrac.physik.uni-karlsruhe.de/svn/KITHiggsToTauTau-auxiliaries/trunk HiggsAnalysis/KITHiggsToTauTau/auxiliaries
+git clone https://github.com/KIT-CMS/quantile_mapping
 
 # Svfit and HHKinFit
 # git clone https://github.com/veelken/SVfit_standalone.git TauAnalysis/SVfitStandalone -b HIG-16-006

@@ -282,6 +282,26 @@ void HttLambdaNtupleConsumer::Init(setting_type const& settings)
 	{
 		return DefaultValues::UndefinedFloat;
 	});
+	LambdaNtupleConsumer<KappaTypes>::AddFloatQuantity("PVnDOF", [](KappaEvent const& event, KappaProduct const& product)
+        {
+                return event.m_vertexSummary->pv.nDOF;
+        });
+        LambdaNtupleConsumer<KappaTypes>::AddFloatQuantity("PVchi2", [](KappaEvent const& event, KappaProduct const& product)
+        {
+                return event.m_vertexSummary->pv.chi2;
+        });
+	LambdaNtupleConsumer<KappaTypes>::AddIntQuantity("htxs_stage0cat", [](KappaEvent const& event, KappaProduct const& product)
+        {
+                return event.m_genEventInfo->htxs_stage0cat;
+        });
+	LambdaNtupleConsumer<KappaTypes>::AddIntQuantity("htxs_stage1cat", [](KappaEvent const& event, KappaProduct const& product)
+        {
+                return event.m_genEventInfo->htxs_stage1cat;
+        });
+        LambdaNtupleConsumer<KappaTypes>::AddBoolQuantity("trg_singlemuon", [settings](KappaEvent const& event, KappaProduct const& product)
+        {
+                return ((LambdaNtupleConsumer<KappaTypes>::GetBoolQuantities().count(std::string("trg_singlemuon_raw")) > 0) ? (SafeMap::Get(LambdaNtupleConsumer<KappaTypes>::GetBoolQuantities(), std::string("trg_singlemuon_raw")))(event, product) : false) && LambdaNtupleConsumer<KappaTypes>::GetFloatQuantities()["lep1Pt"](event, product) > 23.0;
+        });
 
 	// need to be called at last
 	KappaLambdaNtupleConsumer::Init(settings);

@@ -32,9 +32,9 @@ def build_config(nickname):
   config["LooseElectronID"] = "user"
   config["LooseElectronIDType"] = "mvabased2015andlater"
   config["LooseElectronIDName"] = "electronMVAValueMapProducer:ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"
-  config["LooseElectronMvaIDCutEB1"] = 0.837
-  config["LooseElectronMvaIDCutEB2"] = 0.715
-  config["LooseElectronMvaIDCutEE"] = 0.357
+  config["LooseElectronMvaIDCutEB1"] = 0.836695742607
+  config["LooseElectronMvaIDCutEB2"] = 0.715337944031
+  config["LooseElectronMvaIDCutEE"] = 0.356799721718
   config["LooseElectronIsoType"] = "user"
   config["LooseElectronIso"] = "none"
   config["LooseElectronIsoPtSumOverPtUpperThresholdEB"] = 0.3

@@ -575,4 +575,11 @@ void MuTauTriggerWeightProducer::Produce( event_type const& event, product_type 
 			}
 		}
 	}
+	if (product.m_flavourOrderedLeptons[0]->p4.Pt()>23.0){
+		product.m_weights["triggerWeight_1"] = product.m_optionalWeights["triggerWeight_singleMu_1"];
+		product.m_weights["triggerWeight_2"] = 1.0;
+	}else{
+		product.m_weights["triggerWeight_1"] = product.m_optionalWeights["triggerWeight_muTauCross_1"];
+		product.m_weights["triggerWeight_2"] = product.m_optionalWeights["triggerWeight_muTauCross_2"];
+	}
 }

@@ -389,7 +389,7 @@ public:
 
 	// settings for MetFilter
 	IMPL_SETTING_STRINGLIST_DEFAULT(MetFilter, {});
-    IMPL_SETTING_STRINGLIST_DEFAULT(MetFilterToFlag, {});
+  IMPL_SETTING_STRINGLIST_DEFAULT(MetFilterToFlag, {});
 
 	// settings for ZPtReweightProducer
 	IMPL_SETTING(std::string, ZptReweightProducerWeights);
@@ -409,10 +409,10 @@ public:
 	// settting for TopPtReweightingProducer
 	IMPL_SETTING(std::string, TopPtReweightingStrategy)
 
-
 	// settings for NLOreweightingWeightProducer
 	IMPL_SETTING(std::string, HiggsBosonMass)
 	IMPL_SETTING(std::string, NLOweightsRooWorkspace)
+	
 	// settings for quantile mapping
 	IMPL_SETTING_DEFAULT(std::string, QuantileMappingRootfile, "none")
 	IMPL_SETTING_DEFAULT(std::string, Prompt_e_d0_source, "none")
@@ -455,5 +455,4 @@ public:
 	IMPL_SETTING_DEFAULT(std::string, Nonprompt_m_drelZ_target, "none")
 	IMPL_SETTING_DEFAULT(std::string, Tauh_drel0_target, "none")
 	IMPL_SETTING_DEFAULT(std::string, Tauh_drelZ_target, "none")
-
-};
+	};

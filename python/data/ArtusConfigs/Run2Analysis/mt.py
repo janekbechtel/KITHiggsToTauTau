@@ -90,6 +90,7 @@ def build_config(nickname):
           "trg_singlemuon:HLT_IsoTkMu22_eta2p1_v",
           "trg_mutaucross_emb:HLT_IsoMu19_eta2p1_LooseIsoPFTau20_v",
           "trg_mutaucross_emb:HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1_v"]
+
   config["MuonTriggerFilterNames"] = [
           "HLT_IsoMu22_v:hltL3crIsoL1sMu20L1f0L2f10QL3f22QL3trkIsoFiltered0p09",
           "HLT_IsoTkMu22_v:hltL3fL1sMu20L1f0Tkf22QL3trkIsoFiltered0p09",
@@ -204,6 +205,7 @@ def build_config(nickname):
       #~ "drel0_2",
       #~ "drelZ_1",
       #~ "drelZ_2",
+
       "idisoweight_1",
       #"htxs_stage0cat",
       #"htxs_stage1cat",
@@ -213,6 +215,7 @@ def build_config(nickname):
     config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.embeddedDecayModeWeightQuantities").build_list())
     config["Quantities"].extend([
           "muonEffTrgWeight"])  
+
   if re.search("HToTauTauM125", nickname):
     config["Quantities"].extend([
       "htxs_stage0cat",
@@ -261,6 +264,7 @@ def build_config(nickname):
                                                               "producer:ImpactParameterCorrectionsProducer")) #"producer:MVATestMethodsProducer"
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
   if not (isData or isEmbedded):                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")  
+
   if not (isData or isEmbedded): config["Processors"].append( "producer:MuTauTriggerWeightProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   
@@ -272,7 +276,8 @@ def build_config(nickname):
   config["BranchGenMatchedTaus"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
-                         #~ "SvfitCacheConsumer"]
+
+                         #"SvfitCacheConsumer"]
                          #"CutFlowTreeConsumer",
                          #"KappaElectronsConsumer",
                          #"KappaTausConsumer",

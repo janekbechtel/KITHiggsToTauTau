@@ -59,6 +59,7 @@ def build_config(nickname):
           "HLT_Ele25_eta2p1_WPTight_Gsf"]
   config["HLTBranchNames"] = ["trg_singleelectron:HLT_Ele25_eta2p1_WPTight_Gsf_v"]
   config["NoHltFiltering"] = False
+
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
   config["ElectronLowerPtCuts"] = ["26.0"]
@@ -111,6 +112,7 @@ def build_config(nickname):
       "0:e_pt,e_eta",
       "0:e_pt,e_eta"
     ]
+
   config["TriggerEfficiencyData"] = [
     "0:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/triggerWeights/triggerEfficiency_Run2016_Electron_Ele25WPTight_eff.root"]
   config["TriggerEfficiencyMc"] = [
@@ -213,6 +215,7 @@ def build_config(nickname):
                                                               "producer:ImpactParameterCorrectionsProducer")) #"producer:MVATestMethodsProducer"
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
   if not (isData or isEmbedded):                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")    
+
   config["Processors"].append(                                "producer:EventWeightProducer")
   
   
@@ -223,7 +226,9 @@ def build_config(nickname):
   config["BranchGenMatchedTaus"] = True
   config["Consumers"] = ["KappaLambdaNtupleConsumer",
                          "cutflow_histogram"]
-                         #~ "SvfitCacheConsumer"]
+
+                         #"SvfitCacheConsumer"]
+
                          #"CutFlowTreeConsumer",
                          #"KappaElectronsConsumer",
                          #"KappaTausConsumer",

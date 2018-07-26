@@ -559,7 +559,7 @@ class LabelsDict(labels.LabelsDict):
 			self.labels_dict["ee_mvametcov10"] = "Cov_{1,0}(#slash{E}_{T})"
 			self.labels_dict["ee_mvametcov11"] = "Cov_{1,1}(#slash{E}_{T})"
 			self.labels_dict["ee_mvametphi"] = "#phi(#slash{E}_{T})"
-			self.labels_dict["ee_m_vis"] = "Di-electron Mass m_{e} / GeV"
+			self.labels_dict["ee_m_vis"] = "Di-electron Mass m_{ee} / GeV"
 			self.labels_dict["ee_nJets30"] = "Number of Jets"
 			self.labels_dict["ee_njetspt30"] = "Number of Jets"
 			self.labels_dict["ee_njets"] = "Number of Jets"

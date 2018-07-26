@@ -45,8 +45,8 @@ def build_config(nickname):
   if re.search("13TeV", nickname): config["PileupDensity"] = "pileupDensity"
   
   config["Met"] = "met"
-  config["PuppiMet"] = "metPuppi" if re.search("(16Dec2015v1|Fall15|Spring16|Run2015)", nickname) else ""
-  #~ config["MvaMets"] = "MVAMET"
+
+  #config["MvaMets"] = "MVAMET"
   #config["PFChargedHadronsPileUp"] = "pfPileUpChargedHadrons"
   #config["PFChargedHadronsNoPileUp"] = "pfNoPileUpChargedHadrons"
   #config["PFChargedHadronsNoPileUp"] = "pfAllChargedParticles"

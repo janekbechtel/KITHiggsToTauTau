@@ -37,6 +37,7 @@ if [ "$MODE" = "artus" -o "$MODE" = "both" ]; then
     # checkout KITHiggsToTauTau CMSSW analysis package
     git clone https://github.com/KIT-CMS/KITHiggsToTauTau HiggsAnalysis/KITHiggsToTauTau
   #  git clone https://github.com/KIT-CMS/HiggsAnalysis-KITHiggsToTauTau.wiki.git HiggsAnalysis/KITHiggsToTauTau/doc/wiki
+    git clone https://github.com/KIT-CMS/quantile_mapping
 
     # Svfit and HHKinFit
     git clone https://github.com/svfit/ClassicSVfit TauAnalysis/ClassicSVfit

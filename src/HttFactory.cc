@@ -282,6 +282,10 @@ ProducerBaseUntemplated * HttFactory::createProducer(std::string const& id)
 		return new NLOreweightingWeightsProducer();
 	else if(id == TauTrigger2017EfficiencyProducer().GetProducerId())
 		return new TauTrigger2017EfficiencyProducer();
+        else if(id == ImpactParameterCorrectionsProducer().GetProducerId())
+		return new ImpactParameterCorrectionsProducer();
+        else if(id == MetFilterFlagProducer().GetProducerId())
+                return new MetFilterFlagProducer();
 	else
 		return KappaFactory::createProducer( id );
 }

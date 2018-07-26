@@ -253,8 +253,13 @@ void TaggedJetUncertaintyShiftProducer::Produce(event_type const& event, product
 						}
 					}
 
-					if (validBJet) shiftedBTaggedJets.push_back(tjet);
+					if (validBJet) {
+						shiftedBTaggedJets.push_back(tjet);
+						validJet = true; //mark jet as not to be deleted
+					}
 				}
+				//delete non valid (b)jets
+				if(!validJet) delete *jet;
 			}
 
 			(product.m_correctedJetsBySplitUncertainty)[uncertainty] = shiftedJets;

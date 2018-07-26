@@ -65,20 +65,10 @@ def build_config(nickname):
     config["HLTBranchNames"] = ["trg_doubletau_emb:HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v",
                                 "trg_doubletau_emb:HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v"]
   
-  config["NoHltFiltering"] = True
-  config["TauID"] = "TauIDRecommendation13TeV"
-  config["TauUseOldDMs"] = True
-  config["TauLowerPtCuts"] = ["40.0"]
-  config["TauUpperAbsEtaCuts"] = ["2.1"]
-  config["DiTauPairLepton1LowerPtCuts"] = [
-      "HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg:40.0",
-      "HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg:40.0"]
-  config["DiTauPairLepton2LowerPtCuts"] = [
-      "HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg:40.0",
-      "HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg:40.0"]
-  config["DiTauPairMinDeltaRCut"] = 0.5
-  config["DiTauPairIsTauIsoMVA"] = True
-  config["DiTauPairNoHLT"] = True
+  config["NoHltFiltering"] = True if isEmbedded else False
+
+
+  config["DiTauPairNoHLT"] = True if isEmbedded else True
   config["DiTauPairHLTLast"] = False
   config["EventWeight"] = "eventWeight"
   if isEmbedded:
@@ -162,6 +152,7 @@ def build_config(nickname):
       "lep2ErrD0",
       "lep2ErrDz",
       #~ "PVnDOF",
+
       #"PVchi2",
       "drel0_1",
       "drel0_2",
@@ -181,6 +172,7 @@ def build_config(nickname):
           "TriggerDataEfficiencyWeight_2",
           "doubleTauTrgWeight", "trg_doubletau_emb"
           ])  
+
   if re.search("HToTauTauM125", nickname):
     config["Quantities"].extend([
       "htxs_stage0cat",
@@ -223,6 +215,7 @@ def build_config(nickname):
                                                               "producer:SvfitProducer",
                                                               "producer:ImpactParameterCorrectionsProducer")) #"producer:MVATestMethodsProducer"
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
+
   if not isData:                 config["Processors"].append( "producer:TauTauTriggerWeightProducer")
   config["Processors"].append(                                "producer:EventWeightProducer")
   

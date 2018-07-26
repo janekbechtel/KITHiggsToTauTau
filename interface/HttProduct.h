@@ -398,4 +398,10 @@ public:
         double m_ggA_t_weight = 1.0;
         double m_ggA_b_weight = 1.0;
         double m_ggA_i_weight = 1.0;
+        
+        //filled by ImpactParameterCorrectionsProducer
+	double m_DCAcalib[2][2][2]; //[d0/dZ][abs/rel][0/1]
+	
+	//filled by MetFilterFlagProducer
+	bool m_MetFilter = true;
 };
