@@ -370,6 +370,11 @@ public:
 	RMFLV m_pfSumP4;
 	double m_pfSumHtWithoutZMuMu = 0.;
 	RMFLV m_pfSumP4WithoutZMuMu;
+    //filled by ImpactParameterCorrectionsProducer
+	double m_DCAcalib[2][2][2]; //[d0/dZ][abs/rel][0/1]
+
+    //filled by MetFilterFlagProducer
+    bool m_MetFilter = true;
 
 	//filled by TagAndProbeMuonPairProducer
 	std::vector<std::pair<KMuon*,KMuon*>> m_TagAndProbeMuonPairs;

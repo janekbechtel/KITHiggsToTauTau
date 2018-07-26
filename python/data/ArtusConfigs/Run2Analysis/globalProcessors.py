@@ -35,7 +35,7 @@ def build_config(nickname):
   # explicit configuration
   #config["Processors"] = ["#producer:PrintGenParticleDecayTreeProducer",
   #				"#filter:RunLumiEventFilter"]
-  config["Processors"] = ["filter:JsonFilter"] if (isData or re.search("Embedding201", nickname)) else []
+  config["Processors"] = ["filter:JsonFilter"] if (isData or re.search("Embedding201", nickname)) else [] #["filter:RunLumiEventFilter"]
   config["Processors"].append(                      "producer:NicknameProducer")
   if not isData:
     if hasBoson:       config["Processors"].extend(("producer:GenBosonFromGenParticlesProducer",
@@ -54,5 +54,6 @@ def build_config(nickname):
                                                     "producer:GeneratorWeightProducer",
                                                     "producer:NumberGeneratedEventsWeightProducer"))
     if not isEmbedded: config["Processors"].append( "producer:PUWeightProducer")
-    
+  config["Processors"].extend((                     "filter:MetFilter",
+                                                    "producer:MetFilterFlagProducer"))
   return config

@@ -28,9 +28,9 @@ def build_config(nickname):
   
   # explicit configuration
   config["TauEnergyCorrection"] = "smhtt2016" if re.search("Summer16", nickname) else "none"
-  config["TauEnergyCorrectionOneProng"] = 0.982
-  config["TauEnergyCorrectionOneProngPiZeros"] = 1.01
-  config["TauEnergyCorrectionThreeProng"] = 1.004
+  config["TauEnergyCorrectionOneProng"] = 0.995
+  config["TauEnergyCorrectionOneProngPiZeros"] = 1.011
+  config["TauEnergyCorrectionThreeProng"] = 1.006
   if re.search("DY.?JetsToLL|EWKZ2Jets", nickname):
     config["TauElectronFakeEnergyCorrectionOneProng"] = 1.0
     config["TauElectronFakeEnergyCorrectionOneProngPiZeros"] = 1.095

@@ -42,6 +42,9 @@ def build_config(nickname):
   config["EventCount"] = -1
   config["InputIsData"] = "true" if isData else "false"
   
+  config["LumiWhiteList"] = [7582]
+  config["EventWhitelist"] = [1473388]
+  
   BosonPdgIds = {
       "DY.?JetsToLL|EWKZ2Jets|Embedding(2016|MC)" : [
         23
@@ -80,7 +83,48 @@ def build_config(nickname):
   config["MatchAllTausGenTau"] = "true"
   config["MatchGenTauDecayMode"] = "true"
   config["UpdateMetWithCorrectedLeptons"] = "true"
-  config["TopPtReweightingStrategy"] = "Run2"
+  config["TopPtReweightingStrategy"] = "Run1"
+  
+  '''config["MetFilter"] = [
+        "Flag_HBHENoiseFilter",
+        "Flag_HBHENoiseIsoFilter",
+        "Flag_EcalDeadCellTriggerPrimitiveFilter",
+        "Flag_goodVertices",
+        "Flag_globalTightHalo2016Filter",
+        "Flag_BadPFMuonFilter",
+        "Flag_BadChargedCandidateFilter"
+  ]
+  if isData:
+    config["MetFilter"].extend((
+        "Flag_eeBadScFilter",
+        "!Flag_duplicateMuons",
+        "!Flag_badMuons"
+    ))
+  else:
+    config["MetFilter"].extend((
+        "!Flag_badGlobalMuonTaggerMAOD",
+        "!Flag_cloneGlobalMuonTaggerMAOD"
+    ))'''
+  config["MetFilterToFlag"] = [
+        "Flag_HBHENoiseFilter",
+        "Flag_HBHENoiseIsoFilter",
+        "Flag_EcalDeadCellTriggerPrimitiveFilter",
+        "Flag_goodVertices",
+        "Flag_globalTightHalo2016Filter",
+        "Flag_BadPFMuonFilter",
+        "Flag_BadChargedCandidateFilter"
+  ]
+  if isData:
+    config["MetFilterToFlag"].append("Flag_eeBadScFilter")
+    config["MetFilter"] = [
+        "!Flag_duplicateMuons",
+        "!Flag_badMuons"
+    ]
+  else:
+    config["MetFilter"] = [
+        "!Flag_badGlobalMuonTaggerMAOD",
+        "!Flag_cloneGlobalMuonTaggerMAOD"
+    ]
   
   config["OutputPath"] = "output.root"
   
@@ -96,8 +140,9 @@ def build_config(nickname):
   config["MvaMetShiftCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/MEtSys.root"
   config["MvaMetRecoilCorrectorFile"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/recoilMet/MvaMET_2016BCD.root"
   config["MetCorrectionMethod"] = "meanResolution"
-  config["ZptReweightProducerWeights"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/zpt/zpt_weights_2016_BtoH.root"
-  config["ZptRooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
+  #config["ZptReweightProducerWeights"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/zpt/zpt_weights_2016_BtoH.root"
+  config["ZptRooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_sm_moriond_v2.root"
+  config["DoZptUncertainties"] = False
 
   config["ChooseMvaMet"] = False
   
@@ -121,12 +166,12 @@ def build_config(nickname):
   # pipelines - channels including systematic shifts
   config["Pipelines"] = jsonTools.JsonDict()
   #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.ee").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.em").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.et").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.mm").build_config(nickname)
+  #~ config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.em").build_config(nickname)
+  #~ config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.et").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.mm").build_config(nickname)
   config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.mt").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.tt").build_config(nickname)
-  config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.inclusive").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.tt").build_config(nickname)
+  #config["Pipelines"] += importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.inclusive").build_config(nickname)
   
   
   return config

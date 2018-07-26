@@ -22,9 +22,9 @@ def build_config(nickname):
     "extraelec_veto",
     "againstMuonTight3_2",
     "extramuon_veto",
-    "byLooseIsolationMVArun2v1DBoldDMwLT_2",
+    "byVLooseIsolationMVArun2v1DBoldDMwLT_2",
     "nDiMuonVetoPairsOS"
   ]
-  config["PlotlevelFilterExpression"] = "(nDiMuonVetoPairsOS < 0.5)*(extraelec_veto < 0.5)*(extramuon_veto < 0.5)*(againstMuonTight3_2 > 0.5)*(againstElectronVLooseMVA6_2 > 0.5)*(byLooseIsolationMVArun2v1DBoldDMwLT_2 > 0.5)"
+  config["PlotlevelFilterExpression"] = "(nDiMuonVetoPairsOS < 0.5)*(extraelec_veto < 0.5)*(extramuon_veto < 0.5)*(againstMuonTight3_2 > 0.5)*(againstElectronVLooseMVA6_2 > 0.5)*(byVLooseIsolationMVArun2v1DBoldDMwLT_2 > 0.5)"
   
   return config

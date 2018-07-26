@@ -319,6 +319,13 @@ public:
 	IMPL_SETTING_STRINGLIST_DEFAULT(RooWorkspaceObjectNames, {});
 	IMPL_SETTING_STRINGLIST_DEFAULT(RooWorkspaceObjectArguments, {});
 
+	// settings for EmbeddedWeightProducer
+	IMPL_SETTING_DEFAULT(bool, SaveEmbeddedWeightAsOptionalOnly, false);
+	IMPL_SETTING_DEFAULT(std::string, EmbeddedWeightWorkspace, "");
+	IMPL_SETTING_STRINGLIST_DEFAULT(EmbeddedWeightWorkspaceWeightNames, {});
+	IMPL_SETTING_STRINGLIST_DEFAULT(EmbeddedWeightWorkspaceObjectNames, {});
+	IMPL_SETTING_STRINGLIST_DEFAULT(EmbeddedWeightWorkspaceObjectArguments, {});
+
 	// settings for EETriggerWeightProducer
 	IMPL_SETTING_DEFAULT(bool, SaveEETriggerWeightAsOptionalOnly, false);
 	IMPL_SETTING_DEFAULT(std::string, EETriggerWeightWorkspace, "");
@@ -382,6 +389,7 @@ public:
 
 	// settings for MetFilter
 	IMPL_SETTING_STRINGLIST_DEFAULT(MetFilter, {});
+    IMPL_SETTING_STRINGLIST_DEFAULT(MetFilterToFlag, {});
 
 	// settings for ZPtReweightProducer
 	IMPL_SETTING(std::string, ZptReweightProducerWeights);
@@ -402,7 +410,50 @@ public:
 	IMPL_SETTING(std::string, TopPtReweightingStrategy)
 
 
-        // settings for NLOreweightingWeightProducer
-        IMPL_SETTING(std::string, HiggsBosonMass)
-        IMPL_SETTING(std::string, NLOweightsRooWorkspace)
+	// settings for NLOreweightingWeightProducer
+	IMPL_SETTING(std::string, HiggsBosonMass)
+	IMPL_SETTING(std::string, NLOweightsRooWorkspace)
+	// settings for quantile mapping
+	IMPL_SETTING_DEFAULT(std::string, QuantileMappingRootfile, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_e_d0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_e_dZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_m_d0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_m_dZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_e_d0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_e_dZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_m_d0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_m_dZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Tauh_d0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Tauh_dZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_e_drel0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_e_drelZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_m_drel0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_m_drelZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_e_drel0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_e_drelZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_m_drel0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_m_drelZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Tauh_drel0_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Tauh_drelZ_source, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_e_d0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_e_dZ_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_m_d0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_m_dZ_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_e_d0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_e_dZ_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_m_d0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_m_dZ_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Tauh_d0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Tauh_dZ_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_e_drel0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_e_drelZ_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_m_drel0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Prompt_m_drelZ_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_e_drel0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_e_drelZ_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_m_drel0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Nonprompt_m_drelZ_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Tauh_drel0_target, "none")
+	IMPL_SETTING_DEFAULT(std::string, Tauh_drelZ_target, "none")
+
 };

@@ -50,7 +50,9 @@ def build_config(nickname):
     "TauJetFakeEnergyCorrection" : 0.0,
     "TauMuonFakeEnergyCorrection" : 1.0, 
     "TauMuonFakeEnergyCorrectionOneProngPiZerosShift" : 1.0, 
-    "TauMuonFakeEnergyCorrectionOneProngShift" : 1.0
+    "TauMuonFakeEnergyCorrectionOneProngShift" : 1.0,
+    "BTagShift" : 0.0,
+    "BMistagShift" : 0.0
   }
   
   return config
