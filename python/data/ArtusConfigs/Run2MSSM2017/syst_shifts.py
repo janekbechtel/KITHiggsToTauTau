@@ -37,17 +37,6 @@ def build_config(nickname):
     "JetEnergyCorrectionUncertaintyShift" : [0.0]
   }
   
-  if isEmbedded:
-    config["muonEsUp"] = {
-      "JetEnergyCorrectionUncertaintyShift" : [0.0]
-    }
-    config["muonEsUp"]["MuonEnergyCorrectionShift"] = 1.004
-      
-    config["muonEsDown"] = {
-      "JetEnergyCorrectionUncertaintyShift" : [0.0]
-    }
-    config["muonEsDown"]["MuonEnergyCorrectionShift"] = 0.996
-  
   if not isData:
     config["tauEsOneProngUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]

@@ -36,7 +36,7 @@ def build_config(nickname):
   config["UseFirstInputFileNameForSvfit"] = False	# uses kappa nickname instead of filename specified in "SvfitOutFile"
   
   # SvfitProducer config
-  config["SvfitCacheMissBehaviour"] = "recalculate" # Action if SVFit cache is not found. Choose between 'assert': job fails 'undefined': neither runs SVFit nor fails (used when filling SVFit Caches offline) 'recalculate': run SVFit regularly
+  config["SvfitCacheMissBehaviour"] = "undefined" # Action if SVFit cache is not found. Choose between 'assert': job fails 'undefined': neither runs SVFit nor fails (used when filling SVFit Caches offline) 'recalculate': run SVFit regularly
   config["SvfitIntegrationMethod"] = "MarkovChain"
   
   SvfitCacheFiles = {
