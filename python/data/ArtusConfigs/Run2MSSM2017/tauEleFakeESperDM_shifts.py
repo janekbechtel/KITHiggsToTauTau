@@ -20,7 +20,7 @@ def build_config(nickname):
   isEmbedded = datasetsHelper.isEmbedded(nickname)
   #isData = datasetsHelper.isData(nickname) and (not isEmbedded)
   #isTTbar = re.search("TT(To|_|Jets)", nickname)
-  isDY = re.search("DY.?JetsToLLM(50|150)", nickname)
+  isDY = re.search("DY", nickname)
   #isWjets = re.search("W.?JetsToLNu", nickname)
   
   
@@ -33,7 +33,7 @@ def build_config(nickname):
     config += analysis_config_module.build_config(nickname)
   
   # explicit configuration
-  if isDY or isEmbedded:
+  if isDY:
     config["eleTauEsOneProngZeroPiZeroUp"] = {
       "JetEnergyCorrectionUncertaintyShift" : [0.0]
     }

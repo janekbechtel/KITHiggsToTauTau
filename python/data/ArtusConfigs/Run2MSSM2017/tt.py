@@ -149,11 +149,11 @@ def build_config(nickname):
   ]
   config["EventWeight"] = "eventWeight"
   if isEmbedded:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
-    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v17_4_embedded.root"
-    config["EmbeddedWeightWorkspaceWeightNames"]=["0:muonEffTrgWeight"] 
-    config["EmbeddedWeightWorkspaceObjectNames"]=["0:m_sel_trg_ratio"]
-    config["EmbeddedWeightWorkspaceObjectArguments"] = ["0:gt1_pt,gt1_eta,gt2_pt,gt2_eta"]
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_2017_v1.root"
+    config["EmbeddedWeightWorkspaceWeightNames"]=["0:muonEffTrgWeight","0:muonEffIDWeight","1:muonEffIDWeight"] 
+    config["EmbeddedWeightWorkspaceObjectNames"]=["0:m_sel_trg_ratio","0:m_sel_idEmb_ratio","1:m_sel_idEmb_ratio"]
+    config["EmbeddedWeightWorkspaceObjectArguments"] = ["0:gt1_pt,gt1_eta,gt2_pt,gt2_eta","0:gt_pt,gt_eta","1:gt_pt,gt_eta"]
 
   else:
     config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_5.root"
@@ -170,6 +170,11 @@ def build_config(nickname):
         "0:t_pt,t_dm",
         "1:t_pt,t_dm"
     ]
+  config["FakeFaktorFiles"] = [
+      "inclusive:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/medium/tt/inclusive/fakeFactors_20170628_medium.root",
+      "nobtag:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/medium/tt/nobtag/fakeFactors_20170628_medium.root",
+      "btag:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/medium/tt/btag/fakeFactors_20170628_medium.root"
+  ]
   config["FakeFaktorFiles"] = [
       "inclusive:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/medium/tt/inclusive/fakeFactors_20170628_medium.root",
       "nobtag:$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/fakeFactorWeights/medium/tt/nobtag/fakeFactors_20170628_medium.root",
@@ -210,7 +215,7 @@ def build_config(nickname):
   if isEmbedded:
     config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.Includes.embeddedDecayModeWeightQuantities").build_list())
     config["Quantities"].extend([
-          "muonEffTrgWeight"
+          "muonEffTrgWeight", "muonEffIDWeight_1","muonEffIDWeight_2"
           ])
   if re.search("HToTauTauM125", nickname):
     config["Quantities"].extend([
@@ -229,7 +234,7 @@ def build_config(nickname):
                                                               "producer:HttValidLooseMuonsProducer",
                                                               "producer:HltProducer",
                                                               "producer:MetSelector"))
-  if not (isData or isEmbedded): config["Processors"].append( "producer:TauCorrectionsProducer")
+  if not (isData): config["Processors"].append( "producer:TauCorrectionsProducer")
   if not isData:                 config["Processors"].append( "producer:HttValidGenTausProducer")
   config["Processors"].extend((                               "producer:ValidTausProducer",
                                                               "filter:ValidTausFilter",
@@ -243,16 +248,15 @@ def build_config(nickname):
                                                               "producer:Run2DecayChannelProducer",
   #                                                            "producer:TaggedJetCorrectionsProducer",
                                                               "producer:ValidTaggedJetsProducer",
-                                                              "producer:ValidBTaggedJetsProducer",
-                                                              "producer:GroupedJetUncertaintyShiftProducer"))
+                                                              "producer:ValidBTaggedJetsProducer"))
+  if not isEmbedded: config["Processors"].append("producer:GroupedJetUncertaintyShiftProducer")
   if not (isData or isEmbedded):  config["Processors"].append("producer:MetCorrector")
   config["Processors"].extend((                               "producer:SimpleEleTauFakeRateWeightProducer",
                                                               "producer:SimpleMuTauFakeRateWeightProducer"))
   #                                                            "producer:TauTauTriggerWeightProducer"))
   if isTTbar:                    config["Processors"].append( "producer:TopPtReweightingProducer")
   if isDY or isEmbedded:        config["Processors"].append( "producer:ZPtReweightProducer")
-  config["Processors"].extend((                               "filter:MinimalPlotlevelFilter",
-                                                              "producer:TauTauRestFrameSelector",
+  config["Processors"].extend((                               "producer:TauTauRestFrameSelector",
                                                               "producer:DiLeptonQuantitiesProducer",
                                                               "producer:DiJetQuantitiesProducer"))#,
   config["Processors"].append(                                "producer:SvfitProducer")
@@ -272,5 +276,7 @@ def build_config(nickname):
   # pipelines - systematic shifts
   return ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.nominal").build_config(nickname)) + \
          ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauESperDM_shifts").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.JECunc_shifts").build_config(nickname)) + \
-         ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.regionalJECunc_shifts").build_config(nickname))
+         ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.regionalJECunc_shifts").build_config(nickname)) + \
+         ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.METunc_shifts").build_config(nickname)) + \
+         ACU.apply_uncertainty_shift_configs('tt', config, importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2MSSM2017.tauJetFakeESIncl_shifts").build_config(nickname))
+

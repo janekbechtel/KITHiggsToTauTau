@@ -3,7 +3,7 @@
 import logging
 import Artus.Utility.logger as logger
 log = logging.getLogger(__name__)
-
+import copy
 import argparse
 import glob
 import os
@@ -289,7 +289,14 @@ class HiggsToTauTauAnalysisWrapper():
 	def setInputFilenames(self, filelist, alreadyInGridControl = False): ###could be inherited from artusWrapper!
 		#if (not (isinstance(self._config["InputFiles"], list)) and not isinstance(self._config["InputFiles"], basestring)):
 		self._config["InputFiles"] = []
+		if self._args.n_events:
+			if not os.path.exists("$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/Samples/nEvents_buffer.json"):
+					buffer_dict={}
+			else:
+				with open(os.path.expandvars("$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/Samples/nEvents_buffer.json"),"r") as buffer_file:
+					buffer_dict=copy.deepcopy(json.load(buffer_file))
 		for entry in filelist:
+			nickname=self.extractNickname(entry)
 			if os.path.splitext(entry)[1] == ".root":
 				if entry.find("*") != -1:
 					filelist = glob.glob(os.path.expandvars(entry))
@@ -299,10 +306,23 @@ class HiggsToTauTauAnalysisWrapper():
 					if not alreadyInGridControl:
                                                 fileevents = 1
                                                 if self._args.n_events:
-                                                        f = ROOT.TFile.Open(entry)
-                                                        fileevents = f.Get("Events").GetEntries()
-                                                        print "Checking events for",entry,":",fileevents
-                                                        f.Close()
+														if nickname in buffer_dict.keys():
+															if entry in buffer_dict[nickname].keys():
+																fileevents=buffer_dict[entry]
+																print "Getting events for",entry,":",fileevents
+															else:
+																f = ROOT.TFile.Open(entry)
+																fileevents = f.Get("Events").GetEntries()
+																print "Searching events for",entry,":",fileevents
+																f.Close()
+																buffer_dict[nickname][entry]=fileevents
+														else:
+															buffer_dict[nickname]={}
+															f = ROOT.TFile.Open(entry)
+															fileevents = f.Get("Events").GetEntries()
+															print "Searching events for",entry,":",fileevents
+															f.Close()
+															buffer_dict[nickname][entry]=fileevents
 						self._gridControlInputFiles.setdefault(self.extractNickname(entry), []).append(entry + " = " + str(fileevents))
 			elif os.path.splitext(entry)[1] == ".dbs":
 				tmpDBS = self.readDbsFile(entry)
@@ -322,7 +342,9 @@ class HiggsToTauTauAnalysisWrapper():
 				self.setInputFilenames(txtFileContent)
 			else:
 				log.warning("Found file in input search path that is not further considered: " + entry + "\n")
-	
+		if self._args.n_events and buffer_dict:
+			with open(os.path.expandvars("$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/Samples/nEvents_buffer.json"),"w") as buffer_file:
+				json.dump(buffer_dict, buffer_file)
 	def readDbsFile(self, path):
 		dbsInput = {}
 		with open(path, "r") as dbsfile:
