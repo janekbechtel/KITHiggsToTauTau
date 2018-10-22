@@ -55,5 +55,5 @@ def build_config(nickname):
                                                     "producer:NumberGeneratedEventsWeightProducer"))
     if not isEmbedded: config["Processors"].append( "producer:PUWeightProducer")
   config["Processors"].extend((                     "#filter:MetFilter",
-                                                    "#producer:MetFilterFlagProducer"))
+                                                    "producer:MetFilterFlagProducer"))
   return config

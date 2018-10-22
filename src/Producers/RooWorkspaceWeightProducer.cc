@@ -141,13 +141,21 @@ EmbeddedWeightProducer::EmbeddedWeightProducer() :
 void EmbeddedWeightProducer::Produce( event_type const& event, product_type & product,
 						   setting_type const& settings) const
 {
-	
+	//~ double tauTrigWeight = 1.0;
+	double dR = 0.0;
 	for(auto weightNames:m_weightNames)
 	{
 		KLepton* lepton = product.m_flavourOrderedLeptons[weightNames.first];
 		KGenParticle* genTau = product.m_flavourOrderedGenTaus[weightNames.first];
 		for(size_t index = 0; index < weightNames.second.size(); index++)
 		{
+			//~ if(weightNames.second.at(index).find("triggerWeight") == std::string::npos)
+				//~ continue;
+			//~ if(m_functors.at(weightNames.first).size() != 2)
+			//~ {
+				//~ LOG(WARNING) << "TauTauTriggerWeightProducer: two object names are required in json config file. Trigger weight will be set to 1.0!";
+				//~ break;
+			//~ }
 			auto args = std::vector<double>{};
 			std::vector<std::string> arguments;
 			boost::split(arguments,  m_functorArgs.at(weightNames.first).at(index) , boost::is_any_of(","));
@@ -194,10 +202,88 @@ void EmbeddedWeightProducer::Produce( event_type const& event, product_type & pr
 				{
 					args.push_back(SafeMap::GetWithDefault(product.m_leptonIsolationOverPt, lepton, std::numeric_limits<double>::max()));
 				}
+				if(arg=="t_pt")
+				{
+					args.push_back(lepton->p4.Pt());
+				}
+				if(arg=="t_eta")
+				{
+					args.push_back(lepton->p4.Eta());
+				}
+				if(arg=="t_eta")
+				{
+					args.push_back(lepton->p4.Phi());
+				}
+				if(arg=="t_dm")
+				{
+					KTau* tau = static_cast<KTau*>(lepton);
+					args.push_back(tau->decayMode);
+				}
+				if(arg=="dR")
+				{
+					KLepton* lep_1 = product.m_flavourOrderedLeptons[0];
+					KLepton* lep_2 = product.m_flavourOrderedLeptons[1];
+					//~ std::cout<<sqrt(pow((lep_1->p4.Phi()-lep_2->p4.Phi()),2.0)+pow((lep_1->p4.Eta()-lep_2->p4.Eta()),2.0))<<std::endl;
+					args.push_back(sqrt(pow((lep_1->p4.Phi()-lep_2->p4.Phi()),2.0)+pow((lep_1->p4.Eta()-lep_2->p4.Eta()),2.0)));
+					dR = sqrt(pow((lep_1->p4.Phi()-lep_2->p4.Phi()),2.0)+pow((lep_1->p4.Eta()-lep_2->p4.Eta()),2.0));
+				}
 			}
 			if(weightNames.second.at(index).find("muonEffTrgWeight") != std::string::npos){
 				product.m_weights[weightNames.second.at(index)] = m_functors.at(weightNames.first).at(index)->eval(args.data());
 			}
+			if(weightNames.second.at(index).find("doubleTauTrgWeight") != std::string::npos){
+				if(dR < 0.5){
+				product.m_weights[weightNames.second.at(index)]=1.0;
+			}
+				else if(dR < 0.75){
+				product.m_weights[weightNames.second.at(index)]=1.07622;
+			}
+				else if(dR < 1.0){
+				product.m_weights[weightNames.second.at(index)]=1.12215;
+			}
+				else if(dR < 1.25){
+				product.m_weights[weightNames.second.at(index)]=1.15148;
+			}
+				else if(dR < 1.5){
+				product.m_weights[weightNames.second.at(index)]=1.10009;
+			}
+				else if(dR < 1.75){
+				product.m_weights[weightNames.second.at(index)]=1.05449;
+			}
+				else if(dR < 2.0){
+				product.m_weights[weightNames.second.at(index)]=1.00991;
+			}
+				else if(dR < 2.25){
+				product.m_weights[weightNames.second.at(index)]=1.02122;
+			}
+				else if(dR < 2.5){
+				product.m_weights[weightNames.second.at(index)]=0.992925;
+			}
+				else if(dR < 2.75){
+				product.m_weights[weightNames.second.at(index)]=0.991791;
+			}
+				else if(dR < 3.0){
+				product.m_weights[weightNames.second.at(index)]=0.980743;
+			}
+				else if(dR < 3.25){
+				product.m_weights[weightNames.second.at(index)]=0.975733;
+			}
+				else if(dR < 3.5){
+				product.m_weights[weightNames.second.at(index)]=0.962583;
+			}
+				else if(dR < 3.75){
+				product.m_weights[weightNames.second.at(index)]=0.962583;
+			}
+				else if(dR < 4.0){
+				product.m_weights[weightNames.second.at(index)]=0.868078;
+			}
+				else if(dR < 4.25){
+				product.m_weights[weightNames.second.at(index)]=0.924142;
+			}
+				else {
+				product.m_weights[weightNames.second.at(index)]=1.0;
+			}
+		}
 			else{				
 				if(weightNames.second.at(index).find("triggerWeight") != std::string::npos && m_saveTriggerWeightAsOptionalOnly)
 				{
@@ -213,6 +299,7 @@ void EmbeddedWeightProducer::Produce( event_type const& event, product_type & pr
 }
 
 // ==========================================================================================
+
 
 
 EETriggerWeightProducer::EETriggerWeightProducer() :

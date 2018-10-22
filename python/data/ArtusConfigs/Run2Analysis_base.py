@@ -111,8 +111,8 @@ def build_config(nickname, **kwargs):
         "Flag_EcalDeadCellTriggerPrimitiveFilter",
         "Flag_goodVertices",
         "Flag_globalTightHalo2016Filter",
-        "Flag_BadPFMuonFilter",
-        "Flag_BadChargedCandidateFilter"
+        #~ "Flag_BadPFMuonFilter",
+        #~ "Flag_BadChargedCandidateFilter"
   ]
   if isData:
     config["MetFilterToFlag"].append("Flag_eeBadScFilter")
