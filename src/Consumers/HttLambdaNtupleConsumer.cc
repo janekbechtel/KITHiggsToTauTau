@@ -300,10 +300,10 @@ void HttLambdaNtupleConsumer::Init(setting_type const& settings)
         {
                 return event.m_genEventInfo->htxs_stage1cat;
         });
-        LambdaNtupleConsumer<KappaTypes>::AddBoolQuantity("trg_singlemuon", [settings](KappaEvent const& event, KappaProduct const& product)
-        {
-                return ((LambdaNtupleConsumer<KappaTypes>::GetBoolQuantities().count(std::string("trg_singlemuon_raw")) > 0) ? (SafeMap::Get(LambdaNtupleConsumer<KappaTypes>::GetBoolQuantities(), std::string("trg_singlemuon_raw")))(event, product) : false) && LambdaNtupleConsumer<KappaTypes>::GetFloatQuantities()["lep1Pt"](event, product) > 23.0;
-        });
+        //~ LambdaNtupleConsumer<KappaTypes>::AddBoolQuantity("trg_mutaucross", [settings](KappaEvent const& event, KappaProduct const& product)
+        //~ {
+                //~ return 1;
+        //~ });
         LambdaNtupleConsumer<HttTypes>::AddFloatQuantity("pt_ttjj", [](event_type const& event, product_type const& product)
         {
                 return product.m_diJetSystemAvailable ? (product.m_diLeptonPlusMetSystem + product.m_diJetSystem).Pt() : DefaultValues::UndefinedFloat;

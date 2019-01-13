@@ -100,7 +100,7 @@ def build_config(nickname):
           "0:triggerWeight",
           "1:triggerWeight",
           "0:TriggerEmbeddedEfficiencyWeight",
-          "1:TriggerEnbeddedEfficiencyWeight",
+          "1:TriggerEmbeddedEfficiencyWeight",
           "0:TriggerDataEfficiencyWeight",
           "1:TriggerDataEfficiencyWeight",
           #~ "0:doubleTauTrgWeight"                 

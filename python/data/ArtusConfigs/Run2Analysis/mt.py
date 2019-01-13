@@ -66,9 +66,9 @@ def build_config(nickname):
   config["NoHltFiltering"] = True if isEmbedded else False
   config["TauID"] = "TauIDRecommendation13TeV"
   config["TauUseOldDMs"] = True
-  config["MuonLowerPtCuts"] = ["20.0"]
+  config["MuonLowerPtCuts"] = ["10.0"]
   config["MuonUpperAbsEtaCuts"] = ["2.1"]
-  config["TauLowerPtCuts"] = ["30.0"]
+  config["TauLowerPtCuts"] = ["20.0"]
   config["TauUpperAbsEtaCuts"] = ["2.3"]
   config["TriggerObjectLowerPtCut"] = -1.0
   config["DiTauPairMinDeltaRCut"] = 0.5
@@ -82,14 +82,14 @@ def build_config(nickname):
   config["DiTauPairMinDeltaRCut"] = 0.5
   config["DeltaRTriggerMatchingTaus"] = 0.5
   config["DiTauPairIsTauIsoMVA"] = True
-  config["DiTauPairLepton1LowerPtCuts"] = [
-          "HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v:35.0",
-          "HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v:35.0"
-  ]
-  config["DiTauPairLepton2LowerPtCuts"] = [
-          "HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v:35.0",
-          "HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v:35.0"
-  ]
+  #~ config["DiTauPairLepton1LowerPtCuts"] = [
+          #~ "HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v:35.0",
+          #~ "HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v:35.0"
+  #~ ]
+  #~ config["DiTauPairLepton2LowerPtCuts"] = [
+          #~ "HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v:35.0",
+          #~ "HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v:35.0"
+  #~ ]
   config["CheckL1MatchForDiTauPairLepton1"] = True
   config["CheckL1MatchForDiTauPairLepton2"] = True
   config["CheckLepton1TriggerMatch"] = [
@@ -118,21 +118,27 @@ def build_config(nickname):
           "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_v:hltL3crIsoL1sMu18erTauJet20erL1f0L2f10QL3f19QL3trkIsoFiltered0p09",
           "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_v:hltOverlapFilterIsoMu19LooseIsoPFTau20",
           "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1_v:hltL3crIsoL1sSingleMu18erIorSingleMu20erL1f0L2f10QL3f19QL3trkIsoFiltered0p09",
-          "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1_v:hltOverlapFilterSingleIsoMu19LooseIsoPFTau20"]
+          "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1_v:hltOverlapFilterSingleIsoMu19LooseIsoPFTau20"
+          ]
   config["TauTriggerFilterNames"] = [
-          "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_v:hltL3crIsoL1sSingleMu18erIorSingleMu20erL1f0L2f10QL3f19QL3trkIsoFiltered0p09",
-          "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_v:hltOverlapFilterSingleIsoMu19LooseIsoPFTau20",
-          "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1_v:hltL3crIsoL1sSingleMu18erIorSingleMu20erL1f0L2f10QL3f19QL3trkIsoFiltered0p09",
-          "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1_v:hltOverlapFilterSingleIsoMu19LooseIsoPFTau20"]
+          "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_v:hltL1sMu18erTau20er",
+          #~ "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_v:hltOverlapFilterSingleIsoMu19LooseIsoPFTau20",
+          "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1_v:hltL1sSingleMu18erIorSingleMu20er",
+          #~ "HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1_v:hltOverlapFilterSingleIsoMu19LooseIsoPFTau20"
+          ]
   config["EventWeight"] = "eventWeight"
   config["SaveRooWorkspaceTriggerWeightAsOptionalOnly"] = "true"
   if isEmbedded:
-    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_8_embedded.root"
-    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_8_embedded.root"
+    config["RooWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_12_embedded.root"
+    config["EmbeddedWeightWorkspace"] = "$CMSSW_BASE/src/HiggsAnalysis/KITHiggsToTauTau/data/root/scaleFactorWeights/htt_scalefactors_v16_12_embedded.root"
     config["EmbeddedWeightWorkspaceWeightNames"]=[
           "0:muonEffTrgWeight",
           "0:muonEffIDWeight",
           "1:muonEffIDWeight",
+          
+          "1:MuTau_TauLeg_EmbeddedEfficiencyWeight",
+          "1:MuTau_TauLeg_DataEfficiencyWeight",
+          
           "0:isoWeight",
           "0:idWeight",
           "0:triggerWeight"
@@ -141,6 +147,10 @@ def build_config(nickname):
           "0:m_sel_trg_ratio",
           "0:m_sel_idEmb_ratio",
           "1:m_sel_idEmb_ratio",
+          
+          "1:t_TightIso_mt_emb",
+		  "1:t_genuine_TightIso_mt_data,t_fake_TightIso_mt_data",
+          
           "0:m_iso_ratio",
           "0:m_id_ratio",
           "0:m_trg_ratio"
@@ -149,6 +159,10 @@ def build_config(nickname):
           "0:gt1_pt,gt1_eta,gt2_pt,gt2_eta",
           "0:gt_pt,gt_eta",
           "1:gt_pt,gt_eta",
+          
+          "1:t_pt,t_eta",
+          "1:t_pt,t_eta",
+
           "0:m_pt,m_eta",
           "0:m_pt,m_eta",
           "0:m_pt,m_eta"
@@ -205,7 +219,7 @@ def build_config(nickname):
   
   config["Quantities"] = importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.fourVectorQuantities").build_list()
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.syncQuantities").build_list())
-  #~ config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.svfitSyncQuantities").build_list())
+  config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.svfitSyncQuantities").build_list())
   #config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Run2Analysis.Includes.splitJecUncertaintyQuantities").build_list())
   config["Quantities"].extend(importlib.import_module("HiggsAnalysis.KITHiggsToTauTau.data.ArtusConfigs.Includes.weightQuantities").build_list())
   config["Quantities"].extend([
@@ -215,11 +229,13 @@ def build_config(nickname):
       "nDiTauPairCandidates",
       "nAllDiTauPairCandidates",
       "trg_singlemuon",
-      #~ "trg_mutaucross_emb",
+      #~ "trg_mutaucross",
       "trg_mutaucross",
       "triggerWeight_singleMu_1",
       "triggerWeight_muTauCross_1",
       "triggerWeight_muTauCross_2",
+      "MuTau_TauLeg_EmbeddedEfficiencyWeight_2",
+      "MuTau_TauLeg_DataEfficiencyWeight_2",
       #~ "lep1ErrD0",
       #~ "lep1ErrDz",
       #~ "lep2ErrD0",
@@ -230,6 +246,7 @@ def build_config(nickname):
       #~ "drel0_2",
       #~ "drelZ_1",
       #~ "drelZ_2",
+      "pt_ttjj",
 
       "idisoweight_1",
       #"htxs_stage0cat",
@@ -285,7 +302,7 @@ def build_config(nickname):
   if isDY:                       config["Processors"].append( "producer:ZPtReweightProducer")
   if isEmbedded:                 config["Processors"].append( "producer:TauDecayModeWeightProducer")
   config["Processors"].extend((                               "filter:MinimalPlotlevelFilter",
-                                                              "#producer:SvfitProducer",
+                                                              "producer:SvfitProducer",
                                                               "producer:ImpactParameterCorrectionsProducer")) #"producer:MVATestMethodsProducer"
   if isEmbedded:                 config["Processors"].append( "producer:EmbeddedWeightProducer")
   if not (isData or isEmbedded):                 config["Processors"].append( "producer:RooWorkspaceWeightProducer")  
